@@ -1,0 +1,136 @@
+ //gere nuage
+    function nuages() {
+        if (checkNuage) {
+            newCloud();
+        }
+    }
+
+
+
+     //augmente la vitesse des soucoupe en fonction du slider
+        function moreSpeed(speedS) {
+            tabObjectSoucoupe.forEach(function (s) {
+                if (s.xVitesse >= 0) {
+                    s.xVitesse += speedS;
+                } else if (s.xVitesse < 0) {
+                    s.xVitesse -= speedS;
+                }
+
+                if (s.yVitesse >= 0) {
+                    s.yVitesse += speedS;
+                } else if (s.yVitesse < 0) {
+                    s.yVitesse -= speedS;
+                }
+                /*console.log(s.xVitesse);
+                s.xVitesse += speedS;
+                console.log(s.xVitesse);
+                s.yVitesse += speedS;*/
+            });
+        }
+
+        //modifier la variable vitesse
+        function setVitesse(newSpeed) {
+            speedSoucoupe = newSpeed;
+        }
+
+
+
+            //creer des nuages
+            function createCloud() {
+                let vitesseD = Math.random() * 2 + .1;       //vitesse du nuage
+                let size = Math.random() * 60 + 60;
+                //creation d l'objet nuage
+                let Ncloud = new Cloud(vitesseD, colorCloud, size, w);
+                tabObjectCloud.push(Ncloud);
+            }
+
+            //creation d'un nouvau nuages s'il y a lieu
+            function newCloud() {
+                var max = 0;
+                var taille = 0;
+                tabObjectCloud.forEach(function (c) {
+                    if (max < c.x + 10) {
+                        max = c.x;
+                        taille = c.taille;
+                    }
+                });
+                if (w - taille > max) {
+                    createCloud();
+                }
+            }
+
+            //supprimer un nuage
+            function removeCloud(tab) {
+                tab.sort();
+                for (var i = 0; i < tab.length; i++) {
+                    if (tab[i].x < -tab[i].taille) {
+                        tab.shift();
+                    }
+                }
+            }
+
+
+
+            //desinnes les nuages
+                    tabObjectCloud.forEach(function (c) {
+                        c.draw(ctx);
+                        c.move();
+                    });
+
+
+                    //test s'il faut recreer des nuages
+                    nuages();
+
+                    //regarde les nuage a supprimer qui sont dehor du canvas
+                    removeCloud(tabObjectCloud);
+
+
+                        //change la couleur du chapeau
+                        function changeColorChap() {
+                            tabObjectExtraterrestre.forEach(function (e) {
+                                if (e.colorChap === 'white') {
+                                    e.colorChap = 'red';
+                                } else if (e.colorChap === 'red') {
+                                    e.colorChap = 'white';
+                                }
+                            });
+                        }
+
+                            //vide la liste des objets
+                            function clearTabE() {
+                                tabObjectExtraterrestre = [];
+                            }
+
+
+
+
+
+
+    //fait tomber la soucoupe si on a cliqué dessus
+    function downSoucoupe(xMouse, yMouse) {
+        tabObjectSoucoupe.forEach(function (s) {
+            if (xMouse >= s.x - 50 && xMouse <= s.x + 50 && yMouse >= s.y - 50 && yMouse <= s.y + 50) {
+                if (s.touch) {
+                    s.touch = false;
+                    s.rotation = 0;
+                } else {
+                    s.touch = true;
+                }
+            }
+        });
+    }
+
+
+
+tabObjectExtraterrestre.forEach(function (r) {
+            r.draw(ctx);
+            r.move();
+            r.tryColision(w, h);
+            r.rotationBras();
+        });
+
+
+
+  setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
+
+      let tabObjectCloud = [];
