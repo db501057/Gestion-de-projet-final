@@ -1,7 +1,4 @@
 #canvas {
-    background: url("http://www.rollingstone.fr/RS-WP-magazine/wp-content/uploads/2014/08/space-1.jpg") no-repeat center;
-    background-size: cover;
-    border: 1px solid gray;
     max-width: 1250px;
     max-height: 700px;
     cursor: crosshair;
@@ -21,6 +18,7 @@ h1 {
     justify-content: center;
 }
 
+/*
 div {
     border: 1px solid black;
     border-radius: 1ex;
@@ -33,6 +31,7 @@ div {
 .elt {
     margin-bottom: 1rem;
 }
+
 
 #gestion {
     border: none;
@@ -60,3 +59,4 @@ div {
     flex-wrap: nowrap;
     flex-direction: row;
 }
+*/
